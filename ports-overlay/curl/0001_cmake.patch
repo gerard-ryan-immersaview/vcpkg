@@ -1,28 +1,51 @@
+ CMake/FindLibSSH2.cmake | 2 +-
+ CMakeLists.txt          | 9 +++++++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
+
 diff --git a/CMake/FindLibSSH2.cmake b/CMake/FindLibSSH2.cmake
-index 84822dba7..0d6219425 100644
+index 12a7c612b..9839c6784 100644
 --- a/CMake/FindLibSSH2.cmake
 +++ b/CMake/FindLibSSH2.cmake
-@@ -12,7 +12,7 @@ endif()
- find_path(LIBSSH2_INCLUDE_DIR libssh2.h
+@@ -12,7 +12,7 @@ endif (LIBSSH2_INCLUDE_DIR AND LIBSSH2_LIBRARY)
+ FIND_PATH(LIBSSH2_INCLUDE_DIR libssh2.h
  )
  
--find_library(LIBSSH2_LIBRARY NAMES ssh2
-+find_library(LIBSSH2_LIBRARY NAMES ssh2 libssh2
+-FIND_LIBRARY(LIBSSH2_LIBRARY NAMES ssh2
++FIND_LIBRARY(LIBSSH2_LIBRARY NAMES ssh2 libssh2
  )
  
  if(LIBSSH2_INCLUDE_DIR)
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e6dbb73f1..1e2ff138e 100644
+index bf25b1f79..b5e03d561 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1144,7 +1144,9 @@ function(TRANSFORM_MAKEFILE_INC INPUT_FILE OUTPUT_FILE)
+@@ -321,7 +321,7 @@ if(CMAKE_USE_WINSSL)
+   set(SSL_ENABLED ON)
+   set(USE_SCHANNEL ON) # Windows native SSL/TLS support
+   set(USE_WINDOWS_SSPI ON) # CMAKE_USE_WINSSL implies CURL_WINDOWS_SSPI
+-  list(APPEND CURL_LIBS "crypt32")
++  list(APPEND CURL_LIBS "crypt32" "advapi32")
+ endif()
+ if(CURL_WINDOWS_SSPI)
+   set(USE_WINDOWS_SSPI ON)
+@@ -379,6 +379,9 @@ if(USE_NGHTTP2)
+   find_package(NGHTTP2 REQUIRED)
+   include_directories(${NGHTTP2_INCLUDE_DIRS})
+   list(APPEND CURL_LIBS ${NGHTTP2_LIBRARIES})
++  if(NOT BUILD_SHARED_LIBS)
++      add_definitions(-DNGHTTP2_STATICLIB)
++  endif()
+ endif()
+ 
+ if(NOT CURL_DISABLE_LDAP)
+@@ -1143,7 +1146,9 @@ function(TRANSFORM_MAKEFILE_INC INPUT_FILE OUTPUT_FILE)
  
  endfunction()
  
 -if(WIN32 AND NOT CYGWIN)
 +if(MSVC)
-+  set(CURL_INSTALL_CMAKE_DIR share/curl)
++    set(CURL_INSTALL_CMAKE_DIR share/curl)
 +elseif(WIN32 AND NOT CYGWIN)
-   set(CURL_INSTALL_CMAKE_DIR CMake)
+     set(CURL_INSTALL_CMAKE_DIR CMake)
  else()
-   set(CURL_INSTALL_CMAKE_DIR lib/cmake/curl)
+     set(CURL_INSTALL_CMAKE_DIR lib/cmake/curl)
