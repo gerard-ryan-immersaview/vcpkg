@@ -3,14 +3,11 @@ include(vcpkg_common_functions)
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO curl/curl
-    REF curl-7_61_1
-    SHA512 09fa3c87f8d516eabe3241247a5094c32ee0481961cf85bf78ecb13acdf23bb2ec82f113d2660271d22742c79e76d73fb122730fa28e34c7f5477c05a4a6534c
+    REF curl-7_60_0
+    SHA512 876ca211d40887f36f77661235d3875bdd3fe210f131c8bd1025bd8c9ca3144a9ac23247067675a3e30385427748c51d0d54250cc2bb4a2ae0c3a9b9428b0e66
     HEAD_REF master
     PATCHES
         0001_cmake.patch
-        0002_fix_uwp.patch
-        0003_fix_libraries.patch
-        0004_nghttp2_staticlib.patch
 )
 
 string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "static" CURL_STATICLIB)
@@ -109,6 +106,7 @@ vcpkg_configure_cmake(
     OPTIONS_DEBUG
         -DBUILD_CURL_EXE=OFF
         -DENABLE_DEBUG=ON
+        -DCURL_ZLIB=ON
 )
 
 vcpkg_install_cmake()
