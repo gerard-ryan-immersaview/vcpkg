@@ -1,10 +1,11 @@
 include(vcpkg_common_functions)
 
-vcpkg_from_github(
+vcpkg_from_gitlab(
+    GITLAB_URL https://gitlab.com/immersaview
     OUT_SOURCE_PATH SOURCE_PATH
-    REPO uWebSockets/uWebSockets
-    REF v0.14.8
-    SHA512 5e78e2f10e95648ad1e7f26612f69da3bbdcdb3f17c99e3bb9775e3eb440a2741f05375dcc043b43f0f2d4de6da54e7534431c5c10c1350103a4379b55cf9081
+    REPO public/remotes/uwebsockets
+    REF 0.14.8.2imv
+    SHA512 9edb0894267a72ed47e300b2e1e9343cdbcfbab3b021377b27f93b8f930f5cfed5670bbfb458f6bef3e376f9a506b4fc27e5ca2bf8cf00a70dbdc6bbc1fa7bc6
     HEAD_REF master
 )
 
