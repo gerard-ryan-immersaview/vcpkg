@@ -205,6 +205,12 @@ else()
     set(OPTIONS "${OPTIONS} --disable-libass")
 endif()
 
+if("autodetect" IN_LIST FEATURES)
+    set(OPTIONS "${OPTIONS} --enable-autodetect")
+else()
+    set(OPTIONS "${OPTIONS} --disable-autodetect")
+endif()
+
 if("avisynthplus" IN_LIST FEATURES)
     set(OPTIONS "${OPTIONS} --enable-avisynth")
 else()
