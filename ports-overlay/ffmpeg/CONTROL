@@ -1,10 +1,10 @@
 Source: ffmpeg
 Version: 4.3.2
-Port-Version: 11
+Port-Version: 12
 Homepage: https://ffmpeg.org
 Description: a library to decode, encode, transcode, mux, demux, stream, filter and play pretty much anything that humans and machines have created.
   FFmpeg is the leading multimedia framework, able to decode, encode, transcode, mux, demux, stream, filter and play pretty much anything that humans and machines have created. It supports the most obscure ancient formats up to the cutting edge. No matter if they were designed by some standards committee, the community or a corporation. It is also highly portable: FFmpeg compiles, runs, and passes our testing infrastructure FATE across Linux, Mac OS X, Microsoft Windows, the BSDs, Solaris, etc. under a wide variety of build environments, machine architectures, and configurations.
-Default-Features: avresample, avcodec, avformat, avdevice, avfilter, postproc, swresample, swscale
+Default-Features: avresample, avcodec, avformat, avdevice, avfilter, postproc, swresample, swscale, autodetect
 
 Feature: ffmpeg
 Build-Depends: ffmpeg[core,avcodec,avfilter,avformat]
@@ -69,6 +69,9 @@ Description: Build with all allowed dependencies selected with a non-redistribut
 Feature: ass
 Build-Depends: libass
 Description: Libass subtitles rendering, needed for subtitles and ass filter support in ffmpeg
+
+Feature: autodetect
+Description: Autodetect if features can be enabled and enables them
 
 Feature: avisynthplus
 Build-Depends: avisynthplus, ffmpeg[core,gpl]
