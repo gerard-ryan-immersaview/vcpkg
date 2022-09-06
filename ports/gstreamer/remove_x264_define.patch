@@ -1,7 +1,7 @@
-diff --git a/ext/x264/gstx264enc.h b/ext/x264/gstx264enc.h
+diff --git a/subprojects/gst-plugins-ugly/ext/x264/gstx264enc.h b/subprojects/gst-plugins-ugly/ext/x264/gstx264enc.h
 index 6cbfc5c3d..ba7845b20 100644
---- a/ext/x264/gstx264enc.h
-+++ b/ext/x264/gstx264enc.h
+--- a/subprojects/gst-plugins-ugly/ext/x264/gstx264enc.h
++++ b/subprojects/gst-plugins-ugly/ext/x264/gstx264enc.h
 @@ -31,13 +31,6 @@
  #include <stdint.h>
  #endif
