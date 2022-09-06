@@ -1,11 +1,11 @@
 {
   "name": "gstreamer",
-  "version": "1.19.2",
-  "port-version": 7,
+  "version": "1.20.3",
+  "port-version": 0,
   "description": "GStreamer open-source multimedia framework core library",
   "homepage": "https://gstreamer.freedesktop.org/",
   "license": "LGPL-2.0-only",
-  "supports": "!linux & !uwp",
+  "supports": "!uwp",
   "dependencies": [
     {
       "name": "cairo",
@@ -61,6 +61,10 @@
       "dependencies": [
         "graphene"
       ]
+    },
+    "gpl": {
+      "description": "Allow build of plugins that have (A)GPL-licensed dependencies",
+      "supports": "!arm"
     },
     "plugins-bad": {
       "description": "'Bad' GStreamer plugins and helper libraries",
@@ -142,7 +146,15 @@
       "description": "Colon separated list of additional x264 library paths, e.g. for 10-bit version",
       "supports": "!arm",
       "dependencies": [
-        "x264"
+        "x264",
+        {
+          "name": "gstreamer",
+          "default-features": false,
+          "features": [
+            "gpl"
+          ],
+          "platform": "!arm"
+        }
       ]
     }
   }
