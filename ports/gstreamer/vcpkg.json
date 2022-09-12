@@ -80,6 +80,32 @@
         "openh264"
       ]
     },
+    "webrtc": {
+      "description": "'Bad' GStreamer WebRTC plugin. https://gstreamer.freedesktop.org/documentation/webrtc/index.html",
+      "dependencies": [
+        {
+          "name": "gstreamer",
+          "default-features": false,
+          "features": [
+            "plugins-bad"
+          ],
+          "platform": "!arm"
+        }
+      ]
+    },
+    "videoparsers": {
+      "description": "'Bad' GStreamer videoparsersbad plugins. https://gstreamer.freedesktop.org/documentation/videoparsersbad/index.html",
+      "dependencies": [
+        {
+          "name": "gstreamer",
+          "default-features": false,
+          "features": [
+            "plugins-bad"
+          ],
+          "platform": "!arm"
+        }
+      ]
+    },
     "plugins-base": {
       "description": "'Base' GStreamer plugins and helper libraries",
       "dependencies": [

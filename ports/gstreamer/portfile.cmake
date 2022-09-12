@@ -66,7 +66,7 @@ else()
 endif()
 if("plugins-bad" IN_LIST FEATURES)
     # requires 'libdrm', 'dssim', 'libmicrodns'
-    message(FATAL_ERROR "The feature 'plugins-bad' is not supported in this port version")
+    # message(FATAL_ERROR "The feature 'plugins-bad' is not supported in this port version")
     set(PLUGIN_BAD_SUPPORT enabled)
 else()
     set(PLUGIN_BAD_SUPPORT disabled)
@@ -81,6 +81,18 @@ if ("gl-graphene" IN_LIST FEATURES)
     set(GL_GRAPHENE enabled)
 else()
     set(GL_GRAPHENE disabled)
+endif()
+
+if ("webrtc" IN_LIST FEATURES)
+    set(PLUGIN_BAD_WEBRTC enabled)
+else()
+    set(PLUGIN_BAD_WEBRTC disabled)
+endif()
+
+if ("videoparsers" IN_LIST FEATURES)
+    set(PLUGIN_BAD_VIDEOPARSERS enabled)
+else()
+    set(PLUGIN_BAD_VIDEOPARSERS disabled)
 endif()
 
 if ("flac" IN_LIST FEATURES)
@@ -175,11 +187,13 @@ vcpkg_configure_meson(
         -Dgst-plugins-bad:default_library=${LIBRARY_LINKAGE}
         -Dgst-plugins-bad:opencv=disabled
         -Dgst-plugins-bad:hls-crypto=openssl
+        -Dgst-plugins-bad:webrtc=${PLUGIN_BAD_WEBRTC}
+        -Dgst-plugins-bad:videoparsers=${PLUGIN_BAD_VIDEOPARSERS}
         -Dgst-plugins-bad:examples=disabled
         -Dgst-plugins-bad:tests=disabled
         -Dgst-plugins-bad:doc=disabled
         -Dgst-plugins-bad:introspection=disabled
-        -Dgst-plugins-bad:nls=${LIBRARY_LINKAGE}
+        -Dgst-plugins-bad:nls=disabled
         -Dgst-plugins-bad:orc=disabled
         # gst-plugins-ugly
         -Dugly=${PLUGIN_UGLY_SUPPORT}
