@@ -154,6 +154,7 @@ vcpkg_configure_meson(
         -Dgstreamer:doc=disabled
         -Dgstreamer:introspection=disabled
         -Dgstreamer:nls=disabled
+        -Dgstreamer:gst_debug=true
         # gst-plugins-base
         -Dbase=${PLUGIN_BASE_SUPPORT}
         -Dgst-plugins-base:default_library=${LIBRARY_LINKAGE}
@@ -225,10 +226,7 @@ vcpkg_configure_meson(
         -Ddoc=disabled
         -Dgtk_doc=disabled
         -Ddevtools=disabled
-    OPTIONS_DEBUG
-        -Dgstreamer:gst_debug=true # plugins will reference this value
     OPTIONS_RELEASE
-        -Dgstreamer:gst_debug=false
         -Dgstreamer:gobject-cast-checks=disabled
         -Dgstreamer:glib-asserts=disabled
         -Dgstreamer:glib-checks=disabled
