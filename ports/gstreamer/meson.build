@@ -11,11 +11,7 @@ if get_option('srtp').disabled()
   subdir_done()
 endif
 
-
-#test_dep = dependency('libcurl', method: 'cmake', modules: ['CURL::libcurl'], required : true)
-test_dep = dependency('libraw', method: 'cmake', required : true)
-
-srtp_dep = dependency('libsrtp2', version : '>= 2.1.0', required : false)
+srtp_dep = dependency('libsrtp', modules: ['libSRTP::srtp2'], version : '>= 2.1.0', required : true)
 if srtp_dep.found()
   srtp_cargs += ['-DHAVE_SRTP2']
 else
