@@ -273,20 +273,6 @@ if(VCPKG_LIBRARY_LINKAGE STREQUAL "static")
     )
 endif()
 
-if(VCPKG_TARGET_IS_WINDOWS AND VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic")
-    if (NOT VCPKG_BUILD_TYPE)
-        file(GLOB DBG_BINS "${CURRENT_PACKAGES_DIR}/debug/lib/gstreamer-1.0/*.dll"
-                           "${CURRENT_PACKAGES_DIR}/debug/lib/gstreamer-1.0/*.pdb"
-        )
-        file(COPY ${DBG_BINS} DESTINATION "${CURRENT_PACKAGES_DIR}/debug/bin")
-    endif()
-    file(GLOB REL_BINS "${CURRENT_PACKAGES_DIR}/lib/gstreamer-1.0/*.dll"
-                       "${CURRENT_PACKAGES_DIR}/lib/gstreamer-1.0/*.pdb"
-    )
-    file(COPY ${REL_BINS} DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
-    file(REMOVE ${DBG_BINS} ${REL_BINS})
-endif()
-
 # vcpkg errors if pkgconfig files aren't in the standard directory, so we move them to keep it happy.
 # This may make it easier to unintentionally find and link plugins into an application.
 if(VCPKG_LIBRARY_LINKAGE STREQUAL "static")

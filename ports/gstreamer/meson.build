@@ -6,6 +6,8 @@ srtp_sources = [
   'gstsrtpenc.c',
 ]
 
+gst_plugins_install_dir = join_paths(get_option('libdir'), 'gstreamer-1.0')
+
 srtp_cargs = []
 if get_option('srtp').disabled()
   subdir_done()
@@ -37,7 +39,7 @@ if srtp_dep.found()
     include_directories : [configinc],
     dependencies : [gstrtp_dep, gstvideo_dep, srtp_dep],
     install : true,
-    install_dir : plugins_install_dir,
+    install_dir : gst_plugins_install_dir,
   )
   pkgconfig.generate(gstsrtp, install_dir : plugins_pkgconfig_install_dir)
   plugins += [gstsrtp]
