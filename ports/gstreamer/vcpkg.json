@@ -77,7 +77,8 @@
           ],
           "platform": "!arm"
         },
-        "openh264"
+        "openh264",
+        "libsrtp"
       ]
     },
     "webrtc": {

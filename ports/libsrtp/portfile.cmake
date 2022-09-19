@@ -27,6 +27,9 @@ vcpkg_cmake_config_fixup(
     CONFIG_PATH lib/cmake/libSRTP
 )
 
+file(COPY "${CMAKE_CURRENT_LIST_DIR}/libSRTPTargets-debug.cmake" DESTINATION "${CURRENT_PACKAGES_DIR}/share/libsrtp")
+file(COPY "${CMAKE_CURRENT_LIST_DIR}/libSRTPTargets-release.cmake" DESTINATION "${CURRENT_PACKAGES_DIR}/share/libsrtp")
+
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 
 if(EXISTS "${CURRENT_PACKAGES_DIR}/lib/srtp2.dll")

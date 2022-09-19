@@ -25,6 +25,8 @@ vcpkg_from_gitlab(
         ${PATCHES}
 )
 
+file(COPY "${CMAKE_CURRENT_LIST_DIR}/meson.build" DESTINATION "${SOURCE_PATH}/subprojects/gst-plugins-bad/ext/srtp")
+
 if(VCPKG_TARGET_IS_OSX)
     # In Darwin platform, there can be an old version of `bison`,
     # Which can't be used for `gst-build`. It requires 2.4+
@@ -196,6 +198,8 @@ vcpkg_configure_meson(
         -Dgst-plugins-bad:introspection=disabled
         -Dgst-plugins-bad:nls=disabled
         -Dgst-plugins-bad:orc=disabled
+        -Dgst-plugins-bad:dtls=enabled
+        -Dgst-plugins-bad:srtp=enabled
         # gst-plugins-ugly
         -Dugly=${PLUGIN_UGLY_SUPPORT}
         -Dgst-plugins-ugly:default_library=${LIBRARY_LINKAGE}

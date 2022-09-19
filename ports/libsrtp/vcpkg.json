@@ -13,5 +13,13 @@
       "name": "vcpkg-cmake-config",
       "host": true
     }
-  ]
+  ],
+  "default-features": [
+
+  ],
+  "features": {
+    "meson": {
+      "description": "Build using with Meson"
+    }
+  }
 }
