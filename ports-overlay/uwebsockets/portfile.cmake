@@ -4,16 +4,13 @@ vcpkg_from_gitlab(
     GITLAB_URL https://gitlab.com/immersaview
     OUT_SOURCE_PATH SOURCE_PATH
     REPO public/remotes/uwebsockets
-    REF 0.14.8.2imv
-    SHA512 9edb0894267a72ed47e300b2e1e9343cdbcfbab3b021377b27f93b8f930f5cfed5670bbfb458f6bef3e376f9a506b4fc27e5ca2bf8cf00a70dbdc6bbc1fa7bc6
+    REF 0.14.8.3imv
+    SHA512 b3143922946f267e3b1cce23115485cb5d162abadae4291439cd4382da83ef6dd03baeee1d1ba01a0614f4bacd63d60346f32863cf045f873ca9f7cd3b28482b
     HEAD_REF master
 )
 
-file(COPY ${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt DESTINATION ${SOURCE_PATH})
-
 vcpkg_configure_cmake(
     SOURCE_PATH ${SOURCE_PATH}
-    PREFER_NINJA
     OPTIONS_DEBUG
         -DINSTALL_HEADERS=OFF
 )
