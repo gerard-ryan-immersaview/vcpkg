@@ -11,7 +11,6 @@ vcpkg_from_github(
     SHA512 6E4805E6D34B2050A6F68F629B0B42356B1D27F2CBAA6CC6166E56957609C3D9AA6B723DCC674E5C74180D122D27BADD2F9496639CCB1E0C210B9E1F7949D0E2
     PATCHES
         ${CMAKE_PR_PATCH}
-        lib_dir.patch
 )
 
 if (VCPKG_TARGET_IS_WINDOWS)
@@ -25,9 +24,7 @@ vcpkg_cmake_configure(
 
 vcpkg_cmake_install()
 
-vcpkg_cmake_config_fixup(
-    CONFIG_PATH lib/cmake/libSRTP
-)
+vcpkg_cmake_config_fixup()
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 
