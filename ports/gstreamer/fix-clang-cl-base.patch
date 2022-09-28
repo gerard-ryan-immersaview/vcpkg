@@ -2,7 +2,7 @@ diff --git a/subprojects/gst-plugins-base/meson.build b/subprojects/gst-plugins-
 index 495671ebb..fff3ea518 100644
 --- a/subprojects/gst-plugins-base/meson.build
 +++ b/subprojects/gst-plugins-base/meson.build
-@@ -43,7 +43,7 @@ plugins = []
+@@ -43,7 +43,7 @@ gst_libraries = []
  
  cc = meson.get_compiler('c')
  
@@ -11,8 +11,9 @@ index 495671ebb..fff3ea518 100644
    msvc_args = [
        # Ignore several spurious warnings for things gstreamer does very commonly
        # If a warning is completely useless and spammy, use '/wdXXXX' to suppress it
-@@ -75,7 +75,7 @@ endif
+@@ -75,7 +75,7 @@ 
  core_conf = configuration_data()
+ core_conf.set('ENABLE_NLS', 1)
  
  # Symbol visibility
 -if cc.get_id() == 'msvc'

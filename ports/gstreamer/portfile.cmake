@@ -7,11 +7,11 @@ if(VCPKG_TARGET_IS_WINDOWS)
 endif()
 
 vcpkg_from_gitlab(
-    GITLAB_URL https://gitlab.freedesktop.org/
+    GITLAB_URL https://gitlab.freedesktop.org
     OUT_SOURCE_PATH SOURCE_PATH
-    REPO gstreamer/gstreamer
-    REF 1.20.3
-    SHA512 f3f2e27e64af615e687419c350216f975be2a6115cd66ac25c4a488bad1e3b7ba2a9f4a9d0d68293cdccfc23abf6bbbd4513e2719778b6189fd43ae89da52b07
+    REPO gerard.ryan/gstreamer
+    REF dtls-key-logging
+    SHA512 51b7ecfcb5dc8f1ee45b73434fedf2a690c5e93c5dbe951568550663f01866b206f801b72137a36dce728c3b185a819e097d4daffd83e9a1132881f028512924
     HEAD_REF master
     PATCHES
         gstreamer-disable-hot-doc.patch

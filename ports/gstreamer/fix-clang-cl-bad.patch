@@ -2,7 +2,7 @@ diff --git a/subprojects/gst-plugins-bad/ext/dts/meson.build b/subprojects/gst-p
 index 8ab3fc917..c19aa2264 100644
 --- a/subprojects/gst-plugins-bad/ext/dts/meson.build
 +++ b/subprojects/gst-plugins-bad/ext/dts/meson.build
-@@ -15,7 +15,7 @@ if not dca_dep.found()
+@@ -20,7 +20,7 @@   endif
  endif
  
  no_warn_c_args = []
@@ -15,7 +15,7 @@ diff --git a/subprojects/gst-plugins-bad/gst-libs/gst/d3d11/meson.build b/subpro
 index 4a844ef75..cd97e8f7a 100644
 --- a/subprojects/gst-plugins-bad/gst-libs/gst/d3d11/meson.build
 +++ b/subprojects/gst-plugins-bad/gst-libs/gst/d3d11/meson.build
-@@ -174,7 +174,7 @@ endif
+@@ -158,7 +158,7 @@ endif
  
  # MinGW 32bits compiler seems to be complaining about redundant-decls
  # when ComPtr is in use. Let's just disable the warning
@@ -31,6 +31,7 @@ index 7cab556e0..35531110b 100644
 @@ -45,7 +45,7 @@ endif
  
  cdata = configuration_data()
+ cdata.set('ENABLE_NLS', 1)
  
 -if cc.get_id() == 'msvc'
 +if cc.get_argument_syntax() == 'msvc'
@@ -93,7 +94,7 @@ diff --git a/subprojects/gst-plugins-bad/sys/msdk/meson.build b/subprojects/gst-
 index a77160049..7c834d8ed 100644
 --- a/subprojects/gst-plugins-bad/sys/msdk/meson.build
 +++ b/subprojects/gst-plugins-bad/sys/msdk/meson.build
-@@ -139,13 +139,13 @@ if have_mfx_ver134
+@@ -139,13 +139,13 @@  cdata.set10('USE_MSDK_AV1_ENC', 1)
  endif
  
  if host_machine.system() == 'windows'
@@ -107,5 +108,5 @@ index a77160049..7c834d8ed 100644
 -  msdk_deps_found = d3d11_dep.found() and legacy_stdio_dep.found() and cc.get_id() == 'msvc'
 +  msdk_deps_found = d3d11_dep.found() and legacy_stdio_dep.found() and cc.get_argument_syntax() == 'msvc'
  else
-   libva_dep = dependency('libva', required: get_option('msdk'))
-   libva_drm_dep = dependency('libva-drm', required: get_option('msdk'))
+   libdl_dep = cc.find_library('dl', required: get_option('msdk'))
+   libgudev_dep = dependency('gudev-1.0', required: get_option('msdk'))
