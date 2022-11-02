@@ -19,6 +19,7 @@ vcpkg_from_github(
         0014-avfilter-dependency-fix.patch  # http://ffmpeg.org/pipermail/ffmpeg-devel/2021-February/275819.html
         0015-Fix-xml2-detection.patch
         0016-configure-dnn-needs-avformat.patch  # http://ffmpeg.org/pipermail/ffmpeg-devel/2021-May/279926.html
+        0017-add-msvc-windres-wrapper.patch # http://ffmpeg.org/pipermail/ffmpeg-devel/2022-August/299780.html
 )
 
 if (SOURCE_PATH MATCHES " ")

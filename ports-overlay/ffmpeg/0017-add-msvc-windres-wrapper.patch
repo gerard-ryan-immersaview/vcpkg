@@ -1,0 +1,71 @@
+From 9ca3b8b7cddcd44802cfb8377210a5ccf93184b6 Mon Sep 17 00:00:00 2001
+From: Timo Rothenpieler <timo@rothenpieler.org>
+Date: Sun, 7 Aug 2022 16:31:51 +0200
+Subject: [PATCH] compat: add msvc windres wrapper
+
+This is by no means a complete wrapper. It's only designed to fit the
+usecase ffmpegs build system has.
+---
+ compat/windows/mswindres | 32 ++++++++++++++++++++++++++++++++
+ configure                |  2 ++
+ 2 files changed, 34 insertions(+)
+ create mode 100755 compat/windows/mswindres
+
+diff --git a/compat/windows/mswindres b/compat/windows/mswindres
+new file mode 100755
+index 000000000000..450525a33e38
+--- /dev/null
++++ b/compat/windows/mswindres
+@@ -0,0 +1,32 @@
++#!/bin/sh
++
++if [ "$1" = "--version" ]; then
++    rc.exe /?
++    exit $?
++fi
++
++if [ $# -lt 2 ]; then
++    echo "Usage: mswindres [-I/include/path ...] [-DSOME_DEFINE ...] [-o output.o] input.rc [output.o]" >&2
++    exit 0
++fi
++
++EXTRA_OPTS="/nologo"
++
++while [ $# -gt 2 ]; do
++    case $1 in
++    -D*) EXTRA_OPTS="$EXTRA_OPTS /d$(echo $1 | sed -e "s/^..//" -e "s/ /\\\\ /g")" ;;
++    -I*) EXTRA_OPTS="$EXTRA_OPTS /i$(echo $1 | sed -e "s/^..//" -e "s/ /\\\\ /g")" ;;
++    -o)  OPT_OUT="$2"; shift ;;
++    esac
++    shift
++done
++
++IN="$1"
++if [ -z "$OPT_OUT" ]; then
++    OUT="$2"
++else
++    OUT="$OPT_OUT"
++fi
++
++eval set -- $EXTRA_OPTS
++rc.exe "$@" /fo "$OUT" "$IN"
+diff --git a/configure b/configure
+index d5656daf7ff0..fe94941a0319 100755
+--- a/configure
++++ b/configure
+@@ -4371,6 +4371,7 @@ case "$toolchain" in
+             die "Unsupported MSVC version (2013 or newer required)"
+         fi
+         ld_default="$source_path/compat/windows/mslink"
++        windres_default="$source_path/compat/windows/mswindres"
+         nm_default="dumpbin.exe -symbols"
+         ar_default="lib.exe"
+         case "${arch:-$arch_default}" in
+@@ -5621,6 +5622,7 @@ case $target_os in
+             # Cannot build both shared and static libs with MSVC or icl.
+             disable static
+         fi
++        ! enabled small && test_cmd $windres --version && enable gnu_windres
+         enabled x86_32 && check_ldflags -LARGEADDRESSAWARE
+         shlibdir_default="$bindir_default"
+         SLIBPREF=""
