@@ -20,7 +20,7 @@ index 000000000000..450525a33e38
 +#!/bin/sh
 +
 +if [ "$1" = "--version" ]; then
-+    rc.exe /?
++    rc.exe -?
 +    exit $?
 +fi
 +
@@ -29,12 +29,12 @@ index 000000000000..450525a33e38
 +    exit 0
 +fi
 +
-+EXTRA_OPTS="/nologo"
++EXTRA_OPTS="-nologo"
 +
 +while [ $# -gt 2 ]; do
 +    case $1 in
-+    -D*) EXTRA_OPTS="$EXTRA_OPTS /d$(echo $1 | sed -e "s/^..//" -e "s/ /\\\\ /g")" ;;
-+    -I*) EXTRA_OPTS="$EXTRA_OPTS /i$(echo $1 | sed -e "s/^..//" -e "s/ /\\\\ /g")" ;;
++    -D*) EXTRA_OPTS="$EXTRA_OPTS -d$(echo $1 | sed -e "s/^..//" -e "s/ /\\\\ /g")" ;;
++    -I*) EXTRA_OPTS="$EXTRA_OPTS -i$(echo $1 | sed -e "s/^..//" -e "s/ /\\\\ /g")" ;;
 +    -o)  OPT_OUT="$2"; shift ;;
 +    esac
 +    shift
@@ -48,7 +48,7 @@ index 000000000000..450525a33e38
 +fi
 +
 +eval set -- $EXTRA_OPTS
-+rc.exe "$@" /fo "$OUT" "$IN"
++rc.exe "$@" -fo "$OUT" "$IN"
 diff --git a/configure b/configure
 index d5656daf7ff0..fe94941a0319 100755
 --- a/configure
@@ -60,12 +60,12 @@ index d5656daf7ff0..fe94941a0319 100755
 +        windres_default="$source_path/compat/windows/mswindres"
          nm_default="dumpbin.exe -symbols"
          ar_default="lib.exe"
-         case "${arch:-$arch_default}" in
+         case "$arch" in
 @@ -5621,6 +5622,7 @@ case $target_os in
              # Cannot build both shared and static libs with MSVC or icl.
-             disable static
-         fi
+ #            disable static
+ #        fi
 +        ! enabled small && test_cmd $windres --version && enable gnu_windres
          enabled x86_32 && check_ldflags -LARGEADDRESSAWARE
          shlibdir_default="$bindir_default"
-         SLIBPREF=""
+         LIBPREF=""
