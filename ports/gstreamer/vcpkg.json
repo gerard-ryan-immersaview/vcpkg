@@ -72,6 +72,12 @@
       "description": "Allow build of plugins that have (A)GPL-licensed dependencies",
       "supports": "!arm"
     },
+    "libav": {
+      "description": "libav plugins",
+      "dependencies": [
+        "ffmpeg"
+      ]
+    },
     "opus": {
       "description": "Opus de/encoding via libopus",
       "dependencies": [

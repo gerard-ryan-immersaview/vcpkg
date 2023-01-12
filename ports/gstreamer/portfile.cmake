@@ -54,6 +54,12 @@ else()
     set(LICENSE_GPL disabled)
 endif()
 
+if ("libav" IN_LIST FEATURES)
+    set(LIBAV enabled)
+else()
+    set(LIBAV disabled)
+endif()
+
 if ("gpl" IN_LIST FEATURES AND "x264" IN_LIST FEATURES)
     set(PLUGIN_UGLY_X264 enabled)
 else()
@@ -214,7 +220,7 @@ vcpkg_configure_meson(
         -Dgst-plugins-ugly:x264=${PLUGIN_UGLY_X264}
         # see ${GST_BUILD_SOURCE_PATH}/meson_options.txt
         -Dpython=disabled
-        -Dlibav=disabled
+        -Dlibav=${LIBAV}
         -Dlibnice=disabled # libnice
         -Ddevtools=disabled
         -Dges=disabled
