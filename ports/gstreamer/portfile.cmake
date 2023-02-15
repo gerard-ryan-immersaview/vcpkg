@@ -23,6 +23,7 @@ vcpkg_from_gitlab(
         fix-clang-cl-ugly.patch
         gstreamer-disable-no-unused.patch
         srtp_fix.patch
+        fix-bz2-windows-debug-dependency.patch
         ${PATCHES}
 )
 
