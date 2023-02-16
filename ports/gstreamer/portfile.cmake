@@ -83,6 +83,12 @@ else()
     set(PLUGIN_UGLY_SUPPORT disabled)
 endif()
 
+if ("opengl" IN_LIST FEATURES)
+    set(OPENGL enabled)
+else()
+    set(OPENGL disabled)
+endif()
+
 if ("gl-graphene" IN_LIST FEATURES)
     set(GL_GRAPHENE enabled)
 else()
@@ -178,6 +184,10 @@ vcpkg_configure_meson(
         -Dgst-plugins-base:nls=disabled
         -Dgst-plugins-base:orc=disabled
         -Dgst-plugins-base:pango=disabled
+        -Dgst-plugins-base:gl=${OPENGL}
+        # -Dgst-plugins-base:gl_api=opengl
+        # -Dgst-plugins-base:gl_platform=egl
+        # -Dgst-plugins-base:gl_winsys=egl
         -Dgst-plugins-base:gl-graphene=${GL_GRAPHENE}
         -Dgst-plugins-base:x11=${PLUGIN_BASE_X11}
         -Dgst-plugins-base:opus=${PLUGIN_BASE_OPUS}
@@ -211,6 +221,8 @@ vcpkg_configure_meson(
         -Dgst-plugins-bad:orc=disabled
         -Dgst-plugins-bad:dtls=enabled
         -Dgst-plugins-bad:srtp=enabled
+        -Dgst-plugins-bad:gl=${OPENGL}
+
         # gst-plugins-ugly
         -Dugly=${PLUGIN_UGLY_SUPPORT}
         -Dgst-plugins-ugly:default_library=${LIBRARY_LINKAGE}

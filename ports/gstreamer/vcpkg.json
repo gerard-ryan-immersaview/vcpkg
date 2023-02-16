@@ -78,6 +78,10 @@
         "ffmpeg"
       ]
     },
+    "opengl": {
+      "description": "OpenGL integration",
+      "supports": "!arm"
+    },
     "opus": {
       "description": "Opus de/encoding via libopus",
       "dependencies": [
