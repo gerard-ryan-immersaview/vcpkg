@@ -49,6 +49,12 @@ get_filename_component(GLIB_TOOL_DIR "${CURRENT_INSTALLED_DIR}/tools/glib" ABSOL
 message(STATUS "Using glib tools: ${GLIB_TOOL_DIR}")
 vcpkg_add_to_path(PREPEND "${GLIB_TOOL_DIR}")
 
+if ("autodetect" IN_LIST FEATURES)
+    set(AUTODETECT auto)
+else()
+    set(AUTODETECT disabled)
+endif()
+
 if ("gpl" IN_LIST FEATURES)
     set(LICENSE_GPL enabled)
 else()
@@ -151,6 +157,7 @@ endif()
 vcpkg_configure_meson(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
+        -Dauto_features=${AUTODETECT}
         # gstreamer
         -Dgstreamer:default_library=${LIBRARY_LINKAGE}
         -Dgstreamer:check=disabled
