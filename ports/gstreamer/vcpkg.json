@@ -1,7 +1,6 @@
 {
   "name": "gstreamer",
-  "version": "1.20.5",
-  "port-version": 5,
+  "version": "1.22.1",
   "description": "GStreamer open-source multimedia framework core library",
   "homepage": "https://gstreamer.freedesktop.org/",
   "license": "LGPL-2.0-only",
@@ -112,12 +111,7 @@
     "cairo": {
       "description": "Enable support for the cairo graphics library",
       "dependencies": [
-        {
-          "name": "cairo",
-          "features": [
-            "gobject"
-          ]
-        },
+        "cairo",
         {
           "name": "gstreamer",
           "default-features": false,
@@ -179,20 +173,6 @@
         "libxml2"
       ]
     },
-    "dc1394": {
-      "description": "Enable support for the libdc1394 IIDC camera source",
-      "supports": "!windows",
-      "dependencies": [
-        {
-          "name": "gstreamer",
-          "default-features": false,
-          "features": [
-            "plugins-bad"
-          ]
-        },
-        "libdc1394"
-      ]
-    },
     "dtls": {
       "description": "Enable support for the DTLS encoder and decoder",
       "dependencies": [
@@ -252,7 +232,7 @@
       "dependencies": [
         {
           "name": "fluidsynth",
-          "platform": "!windows"
+          "platform": "windows"
         },
         {
           "name": "gstreamer",
@@ -703,7 +683,7 @@
     },
     "x11-bad": {
       "description": "Enable support for X11 in bad plugins",
-      "supports": "!windows",
+      "supports": "windows",
       "dependencies": [
         {
           "name": "gstreamer",
@@ -718,7 +698,7 @@
     },
     "x11-base": {
       "description": "Enable support for X11 in base plugins",
-      "supports": "!windows",
+      "supports": "windows",
       "dependencies": [
         {
           "name": "gstreamer",
