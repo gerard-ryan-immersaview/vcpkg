@@ -185,6 +185,15 @@ vcpkg_configure_meson(
         -Dgst-plugins-base:nls=disabled
         -Dgst-plugins-base:orc=disabled
         -Dgst-plugins-base:pango=disabled
+        -Dgst-plugins-base:videotestsrc=enabled
+        -Dgst-plugins-base:videoscale=enabled
+        -Dgst-plugins-base:videorate=enabled
+        -Dgst-plugins-base:videoconvert=enabled
+        -Dgst-plugins-base:rawparse=enabled
+        -Dgst-plugins-base:audiotestsrc=enabled
+        -Dgst-plugins-base:audioconvert=enabled
+        -Dgst-plugins-base:app=enabled
+        -Dgst-plugins-base:audioresample=enabled
         -Dgst-plugins-base:gl-graphene=${GL_GRAPHENE}
         -Dgst-plugins-base:x11=${PLUGIN_BASE_X11}
         -Dgst-plugins-base:opus=${PLUGIN_BASE_OPUS}
@@ -202,6 +211,18 @@ vcpkg_configure_meson(
         -Dgst-plugins-good:doc=disabled
         -Dgst-plugins-good:nls=disabled
         -Dgst-plugins-good:orc=disabled
+        -Dgst-plugins-good:ximagesrc=enabled
+        -Dgst-plugins-good:pulse=enabled
+        -Dgst-plugins-good:videocrop=enabled
+        -Dgst-plugins-good:videobox=enabled
+        -Dgst-plugins-good:udp=enabled
+        -Dgst-plugins-good:rtsp=enabled
+        -Dgst-plugins-good:rtp=enabled
+        -Dgst-plugins-good:rtpmanager=enabled
+        -Dgst-plugins-good:law=enabled
+        -Dgst-plugins-good:matroska=enabled
+        -Dgst-plugins-good:isomp4=enabled
+        -Dgst-plugins-good:audioparsers=enabled
         -Dgst-plugins-good:flac=${PLUGIN_GOOD_FLAC}
         # gst-plugins-bad
         -Dbad=${PLUGIN_BAD_SUPPORT}
@@ -218,6 +239,13 @@ vcpkg_configure_meson(
         -Dgst-plugins-bad:orc=disabled
         -Dgst-plugins-bad:dtls=enabled
         -Dgst-plugins-bad:srtp=enabled
+        -Dgst-plugins-bad:webrtcdsp=enabled
+        -Dgst-plugins-bad:sctp=enabled
+        -Dgst-plugins-bad:rtp=enabled
+        -Dgst-plugins-bad:rawparse=enabled
+        -Dgst-plugins-bad:opus=enabled
+        -Dgst-plugins-bad:nvcodec=enabled
+        -Dgst-plugins-bad:bz2=enabled
         # gst-plugins-ugly
         -Dugly=${PLUGIN_UGLY_SUPPORT}
         -Dgst-plugins-ugly:default_library=${LIBRARY_LINKAGE}
