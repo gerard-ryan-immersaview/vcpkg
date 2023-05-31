@@ -4,15 +4,21 @@ vcpkg_from_gitlab(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO pipewire/pipewire
     REF ${VERSION}
-    SHA512 94d23a3660f76624abc18a1716519b4d18258a0a4c3047438df231f813df760f21f65b80c174f34b4de111da28b49ae3a46de961637e89828d67ecf614b17ba2
+    SHA512 aa19fc89f6f27046067b764ceb2052f5dace74fd7099afaf6e5b25c00b7e846bf4bd6332ac733ad4a48f4601cadaab6db679de9b4fc5ab3b01d078aee0ff7413
     HEAD_REF master # branch name
 )
+
+if("gstreamer-plugin" IN_LIST FEATURES)
+    set(GSTREAMER_PLUGIN enabled)
+else()
+    set(GSTREAMER_PLUGIN disabled)
+endif()
 
 vcpkg_configure_meson(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
         -Dalsa=disabled
-        -Daudioconvert=disabled
+        -Daudioconvert=enabled
         -Daudiomixer=disabled
         -Daudiotestsrc=disabled
         -Davahi=disabled
@@ -26,14 +32,14 @@ vcpkg_configure_meson(
         -Dbluez5-codec-ldac=disabled
         -Dbluez5=disabled
         -Dcontrol=disabled
-        -Ddbus=disabled
+        -Ddbus=enabled
         -Ddocs=disabled
         -Decho-cancel-webrtc=disabled
         -Devl=disabled
         -Dexamples=disabled
         -Dffmpeg=disabled
-        -Dgstreamer-device-provider=disabled
-        -Dgstreamer=disabled
+        -Dgstreamer-device-provider=${GSTREAMER_PLUGIN}
+        -Dgstreamer=${GSTREAMER_PLUGIN}
         -Dinstalled_tests=disabled
         -Djack-devel=false
         -Djack=disabled
@@ -92,3 +98,51 @@ foreach(file ${config_files})
 endforeach()
 vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/share/pipewire/pipewire.conf" "${CURRENT_PACKAGES_DIR}/bin" "")
 vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/share/pipewire/minimal.conf" "${CURRENT_PACKAGES_DIR}/bin" "")
+
+
+set(USAGE_FILE "${CURRENT_PACKAGES_DIR}/share/${PORT}/usage")
+file(WRITE "${USAGE_FILE}" "The package ${PORT} can be imported via CMake FindPkgConfig module:
+
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(${PORT} REQUIRED)
+    target_link_libraries(main PkgConfig::${PORT})
+
+")
+
+if("gstreamer-plugin" IN_LIST FEATURES)
+    if(VCPKG_LIBRARY_LINKAGE STREQUAL dynamic)
+        set(VCPKG_POLICY_SKIP_ABSOLUTE_PATHS_CHECK enabled)
+        file(APPEND "${USAGE_FILE}" "\tMake sure one of the following paths is added to the 'GST_PLUGIN_PATH' environment variable\n")
+        file(APPEND "${USAGE_FILE}" "\tFor more information on GStreamer environment variables see https://gstreamer.freedesktop.org/documentation/gstreamer/running.html?gi-language=c#environment-variables\n")
+
+        if(NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "debug")
+            file(MAKE_DIRECTORY "${CURRENT_PACKAGES_DIR}/debug/plugins/gstreamer")
+            file(RENAME "${CURRENT_PACKAGES_DIR}/debug/lib/gstreamer-1.0/${CMAKE_SHARED_LIBRARY_PREFIX}gstpipewire${CMAKE_SHARED_LIBRARY_SUFFIX}"
+                        "${CURRENT_PACKAGES_DIR}/debug/plugins/gstreamer/${CMAKE_SHARED_LIBRARY_PREFIX}gstpipewire${CMAKE_SHARED_LIBRARY_SUFFIX}")
+            if(VCPKG_TARGET_IS_WINDOWS)
+                file(RENAME "${CURRENT_PACKAGES_DIR}/debug/lib/gstreamer-1.0/gstpipewire.pdb"
+                            "${CURRENT_PACKAGES_DIR}/debug/plugins/gstreamer/gstpipewire.pdb")
+            else()
+                file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/lib/gstreamer-1.0")
+            endif()
+
+            file(APPEND "${USAGE_FILE}" "\t\t* '${CURRENT_INSTALLED_DIR}/debug/plugins/gstreamer/'\n")
+        endif()
+        if(NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "release")
+            file(MAKE_DIRECTORY "${CURRENT_PACKAGES_DIR}/plugins/gstreamer")
+            file(RENAME "${CURRENT_PACKAGES_DIR}/lib/gstreamer-1.0/${CMAKE_SHARED_LIBRARY_PREFIX}gstpipewire${CMAKE_SHARED_LIBRARY_SUFFIX}"
+                        "${CURRENT_PACKAGES_DIR}/plugins/gstreamer/${CMAKE_SHARED_LIBRARY_PREFIX}gstpipewire${CMAKE_SHARED_LIBRARY_SUFFIX}")
+            if(VCPKG_TARGET_IS_WINDOWS)
+                file(RENAME "${CURRENT_PACKAGES_DIR}/lib/gstreamer-1.0/gstpipewire.pdb"
+                            "${CURRENT_PACKAGES_DIR}/plugins/gstreamer/gstpipewire.pdb")
+            else()
+                file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/lib/gstreamer-1.0")
+            endif()
+
+            file(APPEND "${USAGE_FILE}" "\t\t* '${CURRENT_INSTALLED_DIR}/plugins/gstreamer/'\n")
+        endif()
+    else()
+        file(APPEND "${USAGE_FILE}" "\tRegister static GStreamer plugins with gst_plugin_register_static()\n")
+        file(APPEND "${USAGE_FILE}" "\thttps://gstreamer.freedesktop.org/documentation/application-development/appendix/compiling.html#embedding-static-elements-in-your-application\n")
+    endif()
+endif()
