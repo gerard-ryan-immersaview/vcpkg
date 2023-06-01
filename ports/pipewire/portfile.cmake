@@ -4,79 +4,47 @@ vcpkg_from_gitlab(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO pipewire/pipewire
     REF ${VERSION}
-    SHA512 aa19fc89f6f27046067b764ceb2052f5dace74fd7099afaf6e5b25c00b7e846bf4bd6332ac733ad4a48f4601cadaab6db679de9b4fc5ab3b01d078aee0ff7413
+    SHA512 a8d67bb6135432705d6de026074325f0cae7f01e3fe0b65fa7dafb128e5984ce126f8b4635bfbd9746777514df6f0880a78149fd007c7c1432ac29f95655ddcc
     HEAD_REF master # branch name
 )
 
 if("gstreamer-plugin" IN_LIST FEATURES)
-    set(GSTREAMER_PLUGIN enabled)
+    set(GSTREAMER_PLUGIN true)
 else()
-    set(GSTREAMER_PLUGIN disabled)
+    set(GSTREAMER_PLUGIN false)
 endif()
 
 vcpkg_configure_meson(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
-        -Dalsa=disabled
-        -Daudioconvert=enabled
-        -Daudiomixer=disabled
-        -Daudiotestsrc=disabled
-        -Davahi=disabled
-        -Dbluez5-backend-hfp-native=disabled
-        -Dbluez5-backend-hsp-native=disabled
-        -Dbluez5-backend-hsphfpd=disabled
-        -Dbluez5-backend-ofono=disabled
-        -Dbluez5-codec-aac=disabled
-        -Dbluez5-codec-aptx=disabled
-        -Dbluez5-codec-lc3plus=disabled
-        -Dbluez5-codec-ldac=disabled
-        -Dbluez5=disabled
-        -Dcontrol=disabled
-        -Ddbus=enabled
-        -Ddocs=disabled
-        -Decho-cancel-webrtc=disabled
-        -Devl=disabled
-        -Dexamples=disabled
-        -Dffmpeg=disabled
-        -Dgstreamer-device-provider=${GSTREAMER_PLUGIN}
+        -Dalsa=false
+        -Daudioconvert=true
+        -Daudiomixer=false
+        -Daudiotestsrc=false
+        -Dbluez5=false
+        -Dcontrol=false
+        -Ddocs=false
+        -Devl=false
+        -Dexamples=false
+        -Dffmpeg=false
+        # -Dgstreamer-device-provider=${GSTREAMER_PLUGIN}
         -Dgstreamer=${GSTREAMER_PLUGIN}
-        -Dinstalled_tests=disabled
-        -Djack-devel=false
-        -Djack=disabled
-        -Dlegacy-rtkit=false
-        -Dlibcamera=disabled
-        -Dlibcanberra=disabled
-        -Dlibpulse=disabled
-        -Dlibusb=disabled
-        -Dlv2=disabled
-        -Dman=disabled
-        -Dpipewire-alsa=disabled
-        -Dpipewire-jack=disabled
-        -Dpipewire-v4l2=disabled
-        -Dpw-cat=disabled
-        -Draop=disabled
-        -Droc=disabled
-        -Dsdl2=disabled
-        -Dsndfile=disabled
-        -Dspa-plugins=enabled # This one must be enabled or the resulting build won't be able to connect to pipewire daemon
-        -Dsupport=enabled # This one must be enabled or the resulting build won't be able to connect to pipewire daemon
-        -Dsystemd-system-service=disabled
-        -Dsystemd-system-unit-dir=disabled
-        -Dsystemd-user-service=disabled
-        -Dsystemd-user-unit-dir=disabled
-        -Dsystemd=disabled
-        -Dtest=disabled
-        -Dtests=disabled
-        -Dudev=disabled
-        -Dudevrulesdir=disabled
-        -Dv4l2=disabled
-        -Dvideoconvert=disabled
-        -Dvideotestsrc=disabled
-        -Dvolume=disabled
-        -Dvulkan=disabled
-        -Dx11-xfixes=disabled
-        -Dx11=disabled
-        -Dsession-managers=[]
+        -Djack=false
+        -Dlibcamera=false
+        -Dman=false
+        -Dpipewire-alsa=false
+        -Dpipewire-jack=false
+        -Dpw-cat=false
+        -Dspa-plugins=true # This one must be true or the resulting build won't be able to connect to pipewire daemon
+        -Dsupport=true # This one must be true or the resulting build won't be able to connect to pipewire daemon
+        -Dsystemd=false
+        -Dtest=false
+        -Dtests=false
+        -Dv4l2=false
+        -Dvideoconvert=false
+        -Dvideotestsrc=false
+        -Dvolume=false
+        -Dvulkan=false
 )
 vcpkg_install_meson()
 vcpkg_copy_pdbs()
@@ -90,14 +58,14 @@ if(VCPKG_LIBRARY_LINKAGE STREQUAL "static")
 endif()
 
 # remove absolute paths
-file(GLOB config_files "${CURRENT_PACKAGES_DIR}/share/${PORT}/*.conf")
+file(GLOB config_files "${CURRENT_PACKAGES_DIR}/etc/${PORT}/*.conf")
 foreach(file ${config_files})
     vcpkg_replace_string("${file}" "in ${CURRENT_PACKAGES_DIR}/etc/pipewire for system-wide changes\n# or" "")
     cmake_path(GET file FILENAME filename)
     vcpkg_replace_string("${file}" "# ${CURRENT_PACKAGES_DIR}/etc/pipewire/${filename}.d/ for system-wide changes or in" "")
 endforeach()
-vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/share/pipewire/pipewire.conf" "${CURRENT_PACKAGES_DIR}/bin" "")
-vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/share/pipewire/minimal.conf" "${CURRENT_PACKAGES_DIR}/bin" "")
+vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/etc/pipewire/pipewire.conf" "${CURRENT_PACKAGES_DIR}/bin" "")
+# vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/etc/pipewire/minimal.conf" "${CURRENT_PACKAGES_DIR}/bin" "")
 
 
 set(USAGE_FILE "${CURRENT_PACKAGES_DIR}/share/${PORT}/usage")
