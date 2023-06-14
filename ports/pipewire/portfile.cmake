@@ -14,6 +14,12 @@ else()
     set(GSTREAMER_PLUGIN disabled)
 endif()
 
+if("libcamera" IN_LIST FEATURES)
+    set(LIBCAMERA_FEATURE enabled)
+else()
+    set(LIBCAMERA_FEATURE disabled)
+endif()
+
 vcpkg_configure_meson(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
@@ -44,7 +50,7 @@ vcpkg_configure_meson(
         -Djack-devel=false
         -Djack=disabled
         -Dlegacy-rtkit=false
-        -Dlibcamera=disabled
+        -Dlibcamera=${LIBCAMERA_FEATURE}
         -Dlibcanberra=disabled
         -Dlibpulse=disabled
         -Dlibusb=disabled
