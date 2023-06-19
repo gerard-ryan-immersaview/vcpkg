@@ -1,0 +1,16 @@
+diff --git a/src/modules/module-rtkit.c b/src/modules/module-rtkit.c
+index de30f41..ca9f45c 100644
+--- a/src/modules/module-rtkit.c
++++ b/src/modules/module-rtkit.c
+@@ -45,6 +45,11 @@
+ #include <pipewire/impl.h>
+ #include <pipewire/thread.h>
+ 
++#if __GLIBC__ == 2 && __GLIBC_MINOR__ < 30
++#include <sys/syscall.h>
++#define gettid() syscall(SYS_gettid)
++#endif
++
+ /** \page page_module_rtkit PipeWire Module: RTKit
+  */
+ 

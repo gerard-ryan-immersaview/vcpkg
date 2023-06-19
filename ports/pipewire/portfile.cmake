@@ -4,8 +4,10 @@ vcpkg_from_gitlab(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO pipewire/pipewire
     REF ${VERSION}
-    SHA512 aa19fc89f6f27046067b764ceb2052f5dace74fd7099afaf6e5b25c00b7e846bf4bd6332ac733ad4a48f4601cadaab6db679de9b4fc5ab3b01d078aee0ff7413
+    SHA512 8a7fe26a78071fdd8d4c9e2d9bf3791af8e0cb53b976b45d39dcab4ad08196808f416911fb1b366cc85e3fa80592ec79c4e4556bb3a390f4a10229b4bf9893f7
     HEAD_REF master # branch name
+    PATCHES
+        "glib-getid.patch"
 )
 
 if("gstreamer-plugin" IN_LIST FEATURES)
@@ -34,11 +36,11 @@ vcpkg_configure_meson(
         -Dbluez5-backend-ofono=disabled
         -Dbluez5-codec-aac=disabled
         -Dbluez5-codec-aptx=disabled
-        -Dbluez5-codec-lc3plus=disabled
+        # -Dbluez5-codec-lc3plus=disabled
         -Dbluez5-codec-ldac=disabled
         -Dbluez5=disabled
         -Dcontrol=disabled
-        -Ddbus=enabled
+        # -Ddbus=enabled
         -Ddocs=disabled
         -Decho-cancel-webrtc=disabled
         -Devl=disabled
@@ -47,27 +49,27 @@ vcpkg_configure_meson(
         -Dgstreamer-device-provider=${GSTREAMER_PLUGIN}
         -Dgstreamer=${GSTREAMER_PLUGIN}
         -Dinstalled_tests=disabled
-        -Djack-devel=false
+        -Djack-devel=disabled
         -Djack=disabled
-        -Dlegacy-rtkit=false
+        # -Dlegacy-rtkit=false
         -Dlibcamera=${LIBCAMERA_FEATURE}
-        -Dlibcanberra=disabled
+        # -Dlibcanberra=disabled
         -Dlibpulse=disabled
         -Dlibusb=disabled
-        -Dlv2=disabled
+        # -Dlv2=disabled
         -Dman=disabled
         -Dpipewire-alsa=disabled
         -Dpipewire-jack=disabled
-        -Dpipewire-v4l2=disabled
+        # -Dpipewire-v4l2=disabled
         -Dpw-cat=disabled
-        -Draop=disabled
+        # -Draop=disabled
         -Droc=disabled
         -Dsdl2=disabled
         -Dsndfile=disabled
         -Dspa-plugins=enabled # This one must be enabled or the resulting build won't be able to connect to pipewire daemon
         -Dsupport=enabled # This one must be enabled or the resulting build won't be able to connect to pipewire daemon
         -Dsystemd-system-service=disabled
-        -Dsystemd-system-unit-dir=disabled
+        # -Dsystemd-system-unit-dir=disabled
         -Dsystemd-user-service=disabled
         -Dsystemd-user-unit-dir=disabled
         -Dsystemd=disabled
@@ -80,8 +82,8 @@ vcpkg_configure_meson(
         -Dvideotestsrc=disabled
         -Dvolume=disabled
         -Dvulkan=disabled
-        -Dx11-xfixes=disabled
-        -Dx11=disabled
+        # -Dx11-xfixes=disabled
+        # -Dx11=disabled
         -Dsession-managers=[]
 )
 vcpkg_install_meson()
@@ -103,7 +105,7 @@ foreach(file ${config_files})
     vcpkg_replace_string("${file}" "# ${CURRENT_PACKAGES_DIR}/etc/pipewire/${filename}.d/ for system-wide changes or in" "")
 endforeach()
 vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/share/pipewire/pipewire.conf" "${CURRENT_PACKAGES_DIR}/bin" "")
-vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/share/pipewire/minimal.conf" "${CURRENT_PACKAGES_DIR}/bin" "")
+# vcpkg_replace_string("${CURRENT_PACKAGES_DIR}/share/pipewire/minimal.conf" "${CURRENT_PACKAGES_DIR}/bin" "")
 
 
 set(USAGE_FILE "${CURRENT_PACKAGES_DIR}/share/${PORT}/usage")

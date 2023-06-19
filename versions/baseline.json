@@ -6281,7 +6281,7 @@
       "port-version": 2
     },
     "pipewire": {
-      "baseline": "0.3.71",
+      "baseline": "0.3.32",
       "port-version": 0
     },
     "pistache": {
