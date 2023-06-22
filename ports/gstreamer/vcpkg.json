@@ -668,6 +668,19 @@
         "libvpx"
       ]
     },
+    "wayland-bad": {
+      "description": "Enable support for wayland in bad plugins",
+      "supports": "!windows",
+      "dependencies": [
+        {
+          "name": "gstreamer",
+          "default-features": false,
+          "features": [
+            "plugins-bad"
+          ]
+        }
+      ]
+    },
     "webp": {
       "description": "Enable support for WebP image format",
       "dependencies": [

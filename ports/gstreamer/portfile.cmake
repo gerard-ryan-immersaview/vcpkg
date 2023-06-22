@@ -395,6 +395,12 @@ else()
     set(PLUGIN_BAD_X11 disabled)
 endif()
 
+if("wayland-bad" IN_LIST FEATURES)
+    set(PLUGIN_BAD_WAYLAND enabled)
+else()
+    set(PLUGIN_BAD_WAYLAND disabled)
+endif()
+
 if("gpl" IN_LIST FEATURES AND "x265" IN_LIST FEATURES)
     set(PLUGIN_BAD_X265 enabled)
 else()
@@ -599,7 +605,7 @@ vcpkg_configure_meson(
         -Dgst-plugins-bad:vulkan=auto
         -Dgst-plugins-bad:wasapi=auto
         -Dgst-plugins-bad:wasapi2=auto
-        -Dgst-plugins-bad:wayland=auto
+        -Dgst-plugins-bad:wayland=${PLUGIN_BAD_WAYLAND}
         -Dgst-plugins-bad:webp=${PLUGIN_BAD_WEBP}
         -Dgst-plugins-bad:webrtc=${PLUGIN_BAD_WEBRTC}
         -Dgst-plugins-bad:wildmidi=${PLUGIN_BAD_WILDMIDI}
