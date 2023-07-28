@@ -327,16 +327,31 @@ if("plugins-bad" IN_LIST FEATURES)
     )
 endif()
 
-vcpkg_copy_tools(
-    TOOL_NAMES ${GST_BIN_TOOLS}
-    AUTO_CLEAN
-)
+if (NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "release")
+    vcpkg_copy_tools(
+        TOOL_NAMES ${GST_BIN_TOOLS}
+        AUTO_CLEAN
+    )
 
-vcpkg_copy_tools(
-    TOOL_NAMES ${GST_LIBEXEC_TOOLS}
-    SEARCH_DIR "${CURRENT_PACKAGES_DIR}/libexec/gstreamer-1.0"
-    AUTO_CLEAN
-)
+    vcpkg_copy_tools(
+        TOOL_NAMES ${GST_LIBEXEC_TOOLS}
+        SEARCH_DIR "${CURRENT_PACKAGES_DIR}/libexec/gstreamer-1.0"
+        AUTO_CLEAN
+    )
+elseif (VCPKG_BUILD_TYPE STREQUAL "debug")
+    vcpkg_copy_tools(
+        TOOL_NAMES ${GST_BIN_TOOLS}
+        SEARCH_DIR "${CURRENT_PACKAGES_DIR}/debug/bin"
+        AUTO_CLEAN
+    )
+
+    vcpkg_copy_tools(
+        TOOL_NAMES ${GST_LIBEXEC_TOOLS}
+        SEARCH_DIR "${CURRENT_PACKAGES_DIR}/debug/libexec/gstreamer-1.0"
+        AUTO_CLEAN
+    )
+endif ()
+
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/share"
                     "${CURRENT_PACKAGES_DIR}/debug/libexec"
@@ -368,7 +383,7 @@ endif()
 
 if(VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic")
     # move plugins to ${prefix}/plugins/${PORT} instead of ${prefix}/lib/gstreamer-1.0
-    if(NOT VCPKG_BUILD_TYPE)
+    if(NOT VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "debug")
         file(GLOB DBG_BINS "${CURRENT_PACKAGES_DIR}/debug/lib/gstreamer-1.0/${CMAKE_SHARED_LIBRARY_PREFIX}*${CMAKE_SHARED_LIBRARY_SUFFIX}"
                            "${CURRENT_PACKAGES_DIR}/debug/lib/gstreamer-1.0/*.pdb"
         )
