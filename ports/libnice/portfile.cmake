@@ -30,7 +30,14 @@ vcpkg_configure_meson(
 vcpkg_install_meson()
 
 vcpkg_copy_pdbs()
-vcpkg_copy_tools(TOOL_NAMES stunbdc stund AUTO_CLEAN)
+
+if(NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "release")
+    set(TOOL_SEARCH_DIR "${CURRENT_PACKAGES_DIR}/bin")
+elseif (VCPKG_BUILD_TYPE STREQUAL "debug")
+    set(TOOL_SEARCH_DIR "${CURRENT_PACKAGES_DIR}/debug/bin")
+endif()
+
+vcpkg_copy_tools(TOOL_NAMES stunbdc stund SEARCH_DIR "${TOOL_SEARCH_DIR}" AUTO_CLEAN)
 vcpkg_fixup_pkgconfig()
 
 vcpkg_install_copyright(
