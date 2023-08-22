@@ -1,7 +1,7 @@
 vcpkg_download_distfile(CMAKE_PR_PATCH
-    URLS https://patch-diff.githubusercontent.com/raw/cisco/libsrtp/pull/573.diff
+    URLS https://patch-diff.githubusercontent.com/raw/cisco/libsrtp/pull/573.diff?full_index=1
     FILENAME libsrtp-pr-573.patch
-    SHA512 58c07977ccbd3dce114f59583a5e10813bbee907af5ef23ec1961b4cfd0791c14326845a376470430978e878c78fb1f598851898a9e9031225628739fb248176
+    SHA512 43a76ff0de6070078d1126c0a8b4a1ecea128be6e4a2e538e36b6ec5b2849714a551b20d8f9efc849847798348a42df59bf7d9a9e7eb086b620c42dfa5dff610
 )
 
 vcpkg_from_github(
