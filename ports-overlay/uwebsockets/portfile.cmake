@@ -1,5 +1,3 @@
-include(vcpkg_common_functions)
-
 vcpkg_from_gitlab(
     GITLAB_URL https://gitlab.com/immersaview
     OUT_SOURCE_PATH SOURCE_PATH
@@ -9,13 +7,13 @@ vcpkg_from_gitlab(
     HEAD_REF master
 )
 
-vcpkg_configure_cmake(
+vcpkg_cmake_configure(
     SOURCE_PATH ${SOURCE_PATH}
     OPTIONS_DEBUG
         -DINSTALL_HEADERS=OFF
 )
 
-vcpkg_install_cmake()
+vcpkg_cmake_install()
 
 file(COPY ${SOURCE_PATH}/LICENSE DESTINATION ${CURRENT_PACKAGES_DIR}/share/uwebsockets)
 file(RENAME ${CURRENT_PACKAGES_DIR}/share/uwebsockets/LICENSE ${CURRENT_PACKAGES_DIR}/share/uwebsockets/copyright)
