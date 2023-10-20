@@ -28,8 +28,7 @@
         {
           "name": "x264",
           "features": [
-            "asm",
-            "gpl"
+            "asm"
           ],
           "platform": "x86 | x64 | (arm & !windows) | arm64"
         }
