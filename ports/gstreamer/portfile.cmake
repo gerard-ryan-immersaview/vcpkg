@@ -112,6 +112,8 @@ vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
         x11-bad         gst-plugins-bad:x11
         x265            gst-plugins-bad:x265
         asio            gst-plugins-bad:asio
+
+        plugins-rs      rs
 )
 
 string(REPLACE "OFF" "disabled" FEATURE_OPTIONS "${FEATURE_OPTIONS}")
@@ -158,7 +160,6 @@ vcpkg_configure_meson(
         -Domx=disabled
         -Dvaapi=disabled
         -Dsharp=disabled
-        -Drs=disabled
         -Dgst-examples=disabled
         -Dtls=disabled
         -Dqt5=disabled
