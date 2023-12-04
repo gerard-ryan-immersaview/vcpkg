@@ -3140,6 +3140,10 @@
       "baseline": "2.8.112",
       "port-version": 2
     },
+    "gst-plugins-rs": {
+      "baseline": "0.11.2",
+      "port-version": 0
+    },
     "gst-rtsp-server": {
       "baseline": "1.20.5",
       "port-version": 2

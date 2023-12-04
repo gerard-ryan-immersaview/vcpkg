@@ -1,0 +1,37 @@
+{
+  "name": "gst-plugins-rs",
+  "version": "0.11.2",
+  "description": "GStreamer plugins written in Rust",
+  "homepage": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs",
+  "license": "MPL-2.0 OR Apache-2.0 OR MIT OR LGPL-2.1+",
+  "supports": "!uwp & !xbox",
+  "dependencies": [
+    "gstreamer"
+  ],
+  "features": {
+    "dav1d": {
+      "description": "dav1d GStreamer plugin",
+      "dependencies": [
+        "dav1d"
+      ]
+    },
+    "onvif": {
+      "description": "onvif GStreamer plugin",
+      "dependencies": [
+        "pango"
+      ]
+    },
+    "threadshare": {
+      "description": "threadshare GStreamer plugin",
+      "dependencies": [
+        "orc"
+      ]
+    },
+    "webp": {
+      "description": "webp GStreamer plugin",
+      "dependencies": [
+        "libwebp"
+      ]
+    }
+  }
+}
